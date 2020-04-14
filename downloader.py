@@ -10,7 +10,11 @@ lines = check_output(["apt-cache", "search", "linux-image-unsigned-*"]).decode()
 for line in lines:
 	if line:
 		package_name = line.split(" - ")[0]
-		if "dbgsym" in package_name:
+		used = False
+		for df in listdir("/workspace/output/"):
+			if package_name in df:
+				used = True
+		if "dbgsym" in package_name and not used:
 			print(f"Downloading package: {package_name}")
 			print(check_output(["apt-get", "-y", "install", "--download-only", package_name]))
 			print(check_output(["mkdir","/workspace/downloads"]))
@@ -19,7 +23,7 @@ for line in lines:
 			chdir("./downloads")
 			print(check_output(["ar", "xv", f"/workspace/downloads/{basename(download_file)}"]))
 			chdir("..")
-			print(check_output(["tar", "-xvf", "/workspace/downloads/data.tar.xz"]))
+			print(check_output(["tar", "-xf", "/workspace/downloads/data.tar.xz"]))
 			vmlinuxfile = [f for f in iglob("**/vmlinux*",recursive=True)][0]
 			move(vmlinuxfile,"./vmlinux")
 			print(check_output(["./run.sh", "vmlinux", f"./output/{package_name}_kernelinfo.conf"]))
