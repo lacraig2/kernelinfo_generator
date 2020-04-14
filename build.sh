@@ -1,1 +1,1 @@
-docker build -t kernelinfobuilder . --no-cache
+docker build -t kernelinfobuilder .
