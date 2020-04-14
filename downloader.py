@@ -24,6 +24,5 @@ for line in lines:
 			move(vmlinuxfile,"./vmlinux")
 			print(check_output(["./run.sh", "vmlinux", f"./output/{package_name}_kernelinfo.conf"]))
 			remove("./vmlinux")
-			remove(f"/var/cache/apt/archives/{download_file}")
 			rmtree("/workspace/downloads",ignore_errors=True)
 
