@@ -4,4 +4,4 @@ To use:
 
 - `./build-$ARCH.sh` x86_64 or i386
 - `./run-$ARCH.sh` for either architecture
-- `./run_downloads.sh` - This generates a list of files to download with `cache_reaser.py` and then uses GNU Parallels to run `downloader.py` in parallel.
+- `./run_downloads.sh` - This generates a list of files to download with `cache_reader.py` and then uses GNU Parallels to run `downloader.py` in parallel.
