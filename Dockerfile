@@ -1,13 +1,10 @@
-FROM amd64/ubuntu:18.04
-
-
+ARG BUILD_ARCH
+FROM $BUILD_ARCH/ubuntu:18.04
 # add dbgsym packages
 RUN apt-get update
 RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
-#RUN  dpkg --add-architecture i386
 RUN apt-get -y install git gdb ubuntu-dbgsym-keyring gnupg lsb-core python3 python-apt python3-apt python3-pip software-properties-common parallel
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C8CAB6595FDFF622
-#RUN echo "deb http://ddebs.ubuntu.com $(lsb_release -cs) main restricted universe multiverse\ndeb http://ddebs.ubuntu.com $(lsb_release -cs)-updates main restricted universe multiverse\ndeb http://ddebs.ubuntu.com $(lsb_release -cs)-proposed main restricted universe multiverse\n" | tee -a /etc/apt/sources.list.d/ddebs.list
 
 RUN echo "deb http://ddebs.ubuntu.com precise main restricted universe multiverse\ndeb http://ddebs.ubuntu.com precise-updates main restricted universe multiverse\ndeb http://ddebs.ubuntu.com precise-proposed main restricted universe multiverse\n" | tee -a /etc/apt/sources.list.d/ddebs.list
 RUN echo "deb http://ddebs.ubuntu.com trusty main restricted universe multiverse\ndeb http://ddebs.ubuntu.com trusty-updates main restricted universe multiverse\ndeb http://ddebs.ubuntu.com trusty-proposed main restricted universe multiverse\n" | tee -a /etc/apt/sources.list.d/ddebs.list
@@ -38,5 +35,5 @@ RUN cp ./panda/panda/plugins/osi_linux/utils/kernelinfo_gdb/run.sh .
 # set up python and downloader
 RUN python3 -m pip install requests
 COPY ./downloader.py ./
-COPY ./cache_reader.py ./
 COPY ./run_downloads.sh ./
+COPY ./cache_reader.py ./
