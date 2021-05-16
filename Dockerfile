@@ -1,8 +1,8 @@
 ARG BUILD_ARCH
 
 FROM golang:1.16 AS builder
-RUN set GOARCH=386 GOOS=linux GOARM=6 
-RUN go get github.com/volatilityfoundation/dwarf2json
+# build against i386 because it'll work fine for either
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=386 go get github.com/volatilityfoundation/dwarf2json
 
 FROM $BUILD_ARCH/ubuntu:18.04 as main
 COPY --from=builder /go/bin/dwarf2json /
