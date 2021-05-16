@@ -1,6 +1,7 @@
 ARG BUILD_ARCH
 
 FROM golang:1.16 AS builder
+RUN set GOARCH=386 GOOS=linux GOARM=6 
 RUN go get github.com/volatilityfoundation/dwarf2json
 
 FROM $BUILD_ARCH/ubuntu:18.04 as main
@@ -10,7 +11,7 @@ RUN chmod +x /dwarf2json
 # add dbgsym packages
 RUN apt-get --fix-missing -y update
 RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
-RUN apt-get -y install git gdb ubuntu-dbgsym-keyring gnupg  python3 python-apt python3-apt python3-pip parallel
+RUN apt-get -y install git gdb ubuntu-dbgsym-keyring gnupg  python3 python-apt python3-apt python3-pip parallel software-properties-common lsb-core
 RUN  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F2EDC64DC5AEE1F6B9C621F0C8CAB6595FDFF622
 
 RUN echo "deb http://ddebs.ubuntu.com precise main restricted universe multiverse\ndeb http://ddebs.ubuntu.com precise-updates main restricted universe multiverse\ndeb http://ddebs.ubuntu.com precise-proposed main restricted universe multiverse\n" | tee -a /etc/apt/sources.list.d/ddebs.list
