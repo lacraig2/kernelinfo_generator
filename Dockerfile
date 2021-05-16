@@ -5,7 +5,7 @@ FROM golang:1.16 AS builder
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=386 go get github.com/volatilityfoundation/dwarf2json
 
 FROM $BUILD_ARCH/ubuntu:18.04 as main
-COPY --from=builder /go/bin/dwarf2json /
+COPY --from=builder /go/bin/linux_386/dwarf2json /
 RUN chmod +x /dwarf2json
 
 # add dbgsym packages
