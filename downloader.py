@@ -62,7 +62,7 @@ if len(argv) == 2:
                 if not exists(fname_kerneljson):
                     print(f"/dwarf2json linux --elf {vmlinuxfile}")
                     with open(fname_kerneljson,"wb") as f:
-                        f.write(check_output(["/root/go/src/github.com/volatilityfoundation/dwarf2json/dwarf2json","linux","--elf",vmlinuxfile]))
+                        f.write(check_output(["/dwarf2json","linux","--elf",vmlinuxfile]))
         else:
             print(f"couldn't find a vmlinux file for {package_name}")
         rmtree(f"/workspace/downloads/{package_name}")
