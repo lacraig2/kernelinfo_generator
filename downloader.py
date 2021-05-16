@@ -60,7 +60,7 @@ if len(argv) == 2:
                     adjust_file(fname_kernelinfo, "/workspace/output_kernelinfo/")
 
                 if not exists(fname_kerneljson):
-                    print(f"/root/go/src/github.com/volatilityfoundation/dwarf2json/dwarf2json linux --elf {vmlinuxfile}")
+                    print(f"/dwarf2json linux --elf {vmlinuxfile}")
                     with open(fname_kerneljson,"wb") as f:
                         f.write(check_output(["/root/go/src/github.com/volatilityfoundation/dwarf2json/dwarf2json","linux","--elf",vmlinuxfile]))
         else:
